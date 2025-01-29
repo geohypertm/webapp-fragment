@@ -1,11 +1,20 @@
 import { useEffect, useState } from "react";
 
 const UserInfo = () => {
-  const [userInfo, setUserInfo] = useState({});
+    const [userInfo, setUserInfo] = useState({});
 
-  useEffect(() => {
-    setUserInfo(window.Telegram.WebApp.initDataUnsafe?.user || {});
-  }, []);
+    useEffect(() => {
+      window.Telegram.WebApp.ready(); 
+      
+      const userData = window.Telegram.WebApp.initDataUnsafe?.user;
+      
+      if (!userData) {
+        console.warn("User data is missing! Make sure you open the app from Telegram.");
+        return;
+      }
+  
+      setUserInfo(userData);
+    }, []);
 
   return (
     <>
