@@ -1,61 +1,24 @@
-import { useEffect, useState } from "react";
-
+import { useContext } from "react";
+import fragmentContext from "../../ContextApi/context";
 const UserInfo = () => {
-    const [userInfo, setUserInfo] = useState({});
-
-    useEffect(() => {
-      window.Telegram.WebApp.ready(); 
-      
-      const userData = window.Telegram.WebApp.initDataUnsafe?.user;
-      
-      if (!userData) {
-        console.warn("User data is missing! Make sure you open the app from Telegram.");
-        return;
-      }
-  
-      setUserInfo(userData);
-    }, []);
+    const {inputValue, setInputValue, handlebtn} = useContext(fragmentContext);
 
   return (
     <>
-      <div className="overflow-x-auto">
-        <table className="table">
-          {/* head */}
-          <thead>
-            <tr>
-              <th>INFO / ID</th>
-              <th>ID</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* row 1 */}
-            <tr>
-              <td>
-                <div className="flex items-center gap-3">
-                  <div className="avatar">
-                    <div className="mask mask-squircle h-12 w-12">
-                      <img
-                        src={`https://t.me/i/userpic/320/${userInfo.id}.jpg`}
-                        alt="Avatar"
-                        onError={(e) => (e.target.src = "https://img.daisyui.com/images/profile/demo/2@94.webp")}
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <div className="font-bold">{`${userInfo.first_name || ""} ${userInfo.last_name || ""}`}</div>
-                    <div className="text-sm opacity-50">{`@${userInfo.username || "unknown"}`}</div>
-                  </div>
-                </div>
-              </td>
-              <td>
-                {userInfo.id || "N/A"}
-                <br />
-                <span className="badge badge-ghost badge-sm">Desktop Support Technician</span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    <div className="flex flex-col justify-center items-center">
+    <h1 className="m-2">اضافه کردن ایپی یا دامنه به لیست</h1>
+      <input
+        type="text"
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+        placeholder="Type here"
+        className="input input-bordered input-info w-full m-2 max-w-xs"
+      />
+      <button onClick={handlebtn} className="btn btn-outline m-2 w-full max-w-xs btn-primary">
+        اضافه 
+      </button>
+    </div>
+      
     </>
   );
 };
